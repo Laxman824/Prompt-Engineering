@@ -1,63 +1,59 @@
-# ChatGPT Prompting Guide
+# Task Instructions
 
-## Principles for Effective Prompting
+## Tactic 1: Use delimiters to clearly indicate distinct parts of the input
+Delimiters can be anything like: ```, """, < >, `<tag> </tag>`, `:`
 
-### Principle 1: Clarity and Specificity
-- Write clear and specific instructions.
-- Use delimiters to clearly indicate distinct parts of the input.
+## Tactic 2: Ask for a structured output
+Output formats: JSON, HTML
 
-### Principle 2: Allow Time to "Think"
-- Give the model time to process and generate responses.
-- Specify the steps required to complete a task.
+Prompt:
+You will be provided with text delimited by triple quotes. 
+If it contains a sequence of instructions, rewrite those instructions in the following format:
 
-## Tactics for Structured Output
+Step 1 - ...
+Step 2 - …
+…
+Step N - …
 
-### Tactic 1: Delimiters
-- Use delimiters like triple backticks or tags to separate different parts of the prompt.
+If the text does not contain a sequence of instructions, then simply write "No steps provided."
 
-### Tactic 2: Structured Responses
-- Request outputs in structured formats like JSON or HTML.
+## Tactic 3: Ask the model to check whether conditions are satisfied
 
-### Tactic 3: Condition Checking
-- Ask the model to verify if certain conditions are met before proceeding.
+## Tactic 4: "Few-shot" prompting
+Prompt:
+Your task is to answer in a consistent style.
 
-### Tactic 4: Few-Shot Prompting
-- Provide examples of the desired output style or structure.
+<child>: Teach me about patience.
 
-## Steps to Craft Your Prompt
+<grandparent>: The river that carves the deepest valley flows from a modest spring; the grandest symphony originates from a single note; the most intricate tapestry begins with a solitary thread.
 
-1. **Define the Task Clearly**: Start by clearly stating what you need from the model.
+<child>: Teach me about resilience.
 
-2. **Use Delimiters**: Separate instructions, inputs, and expected outputs with clear delimiters.
+# Principle 2: Give the model time to “think”
 
-3. **Request Structured Output**: If you need a specific format, instruct the model accordingly.
+## Tactic 1: Specify the steps required to complete a task
+Prompt:
+Perform the following actions: 
+1 - Summarize the following text delimited by triple backticks with 1 sentence.
+2 - Translate the summary into French.
+3 - List each name in the French summary.
+4 - Output a JSON object that contains the following keys: french_summary, num_names.
 
-4. **Check Conditions**: Include a step where the model checks if certain conditions are satisfied.
+Separate your answers with line breaks.
 
-5. **Provide Examples**: Use few-shot prompting to give the model examples of the desired output.
+## Tactic 2: Instruct the model to work out its own solution before rushing to a conclusion
+Prompt:
+Your task is to determine if the student's solution is correct or not.
+To solve the problem, do the following:
+- First, work out your own solution to the problem including the final total. 
+- Then compare your solution to the student's solution and evaluate if the student's solution is correct or not. 
+- Don't decide if the student's solution is correct until you have done the problem yourself.
 
-6. **Allow for "Thinking"**: Structure your prompt to let the model "think" through the problem.
+Use the following format:
+Question:
+## Model Limitations: Hallucinations
+Reducing hallucinations can be done by 
+First find relevant information 
+Then answer the questions 
+Based on the relevant information 
 
-7. **Avoid Rushing**: Instruct the model to work out its own solution before providing an answer.
-
-8. **Handle Hallucinations**: Instruct the model to base its responses on relevant information.
-
-## Example Prompt
-
-```plaintext
-Your task is to summarize the provided text and translate it into French. Check if any names are mentioned and list them. Finally, output a JSON object with the summary and the number of names.
-
-Text to Summarize:
-<Your text here>
-
-Instructions:
-1. Summarize the text in one sentence.
-2. Translate the summary into French.
-3. List any names mentioned in the summary.
-4. Output a JSON object with keys: 'french_summary' and 'num_names'.
-
-Format your response as follows:
-Summary: <Your summary here>
-Translation: <Your translation here>
-Names: <List of names here>
-Output JSON: <Your JSON object here>
